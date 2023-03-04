@@ -20,7 +20,10 @@
           "apps/flow-chart/src/assets"
         ],
         "styles": ["apps/flow-chart/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": ["apps/flow-chart/src/styles"]
+        }
       },
       "configurations": {
         "production": {

@@ -1,0 +1,50 @@
+{
+  "name": "flow-chart-container",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/flow-chart-container/src",
+  "prefix": "flow-chart",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/flow-chart-container/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/flow-chart-container/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/flow-chart-container/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/flow-chart-container/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/flow-chart-container/**/*.ts",
+          "libs/flow-chart-container/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

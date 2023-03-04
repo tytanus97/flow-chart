@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@flow-chart/flow-chart-container": [
+        "libs/flow-chart-container/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
