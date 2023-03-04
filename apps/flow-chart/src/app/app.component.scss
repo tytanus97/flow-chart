@@ -1,0 +1,14 @@
+.flow-chart-wrapper {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(32, 28, 73);
+}
+
+.flow-chart-container {
+    width: 50%;
+    height: 50%;
+
+    background-color: white;
+
+    transform: translate(50%, 50%);
+}

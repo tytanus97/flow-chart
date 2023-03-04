@@ -2,7 +2,9 @@
   "name": "flow-chart",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve": "npx nx serve flow-chart"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~15.2.0",
