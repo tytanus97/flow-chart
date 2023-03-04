@@ -19,8 +19,9 @@
     height: 100px;
 
     background-color: orange;
-
     @include mixins.flexCenter;
 
     text-align: center;
+
+    cursor: pointer;
 }
