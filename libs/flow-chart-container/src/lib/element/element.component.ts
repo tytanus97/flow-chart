@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -10,5 +10,5 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   styleUrls: ['./element.component.scss'],
 })
 export class ElementComponent {
-  @Input() boundary!: string
+  @ViewChild(TemplateRef) template!: TemplateRef<any>
 }

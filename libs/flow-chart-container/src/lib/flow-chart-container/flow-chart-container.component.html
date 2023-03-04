@@ -1,3 +1,7 @@
 <div [ngStyle]="{'width':width || '100%',height:height || '100%'}" class="flow-chart-wrapper drag-boundary">
-    <flow-chart-element [boundary]="'.drag-boundary'"></flow-chart-element>
+    <div class="flow-chart-element" *ngFor="let flowChartElement of flowChartElements" cdkDrag
+        cdkDragBoundary=".drag-boundary">
+        <ng-template [ngTemplateOutlet]="flowChartElement.template"></ng-template>
+    </div>
+    <!-- <flow-chart-element [boundary]="'.drag-boundary'"></flow-chart-element> -->
 </div>
