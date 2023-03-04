@@ -33,22 +33,7 @@ export class AppComponent {
       width: 100,
       height: 100,
       color: 'red'
-    }, {
-      text: '2',
-      width: 100,
-      height: 100,
-      color: 'blue'
-    }, {
-      text: '3',
-      width: 100,
-      height: 100,
-      color: 'green'
-    }, {
-      text: '4',
-      width: 100,
-      height: 100,
-      color: 'purple'
-    },
+    }
   ]
 
   @ViewChild('flowChartContainer')

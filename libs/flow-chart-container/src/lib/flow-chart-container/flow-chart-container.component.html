@@ -1,10 +1,10 @@
-<div [ngStyle]="{'width':width || '100%',height:height || '100%'}" class="flow-chart-wrapper drag-boundary">
+<div [ngStyle]="{'width':width?  width+'px' : '100%','height':height ? height+'px':'100%'}"
+    class="flow-chart-wrapper drag-boundary">
 
-    <div #panzoomWrapper>
-        <div class="flow-chart-element" *ngFor="let flowChartElement of flowChartElements" cdkDrag
-            cdkDragBoundary=".drag-boundary" (cdkDragStarted)="onDragStarted()" (cdkDragEnded)="onDragEnded($event)"
-            [cdkDragConstrainPosition]="dragConstrainPointMethod">
+    <div #panzoomWrapper class="panzoom-wrapper">
+        <flow-chart-draggable-element *ngFor="let flowChartElement of flowChartElements"
+            [zoomScale]="panzoomScale$ | async" (dragStart)="onDragStarted()" (dragEnd)="onDragEnded()">
             <ng-template [ngTemplateOutlet]="flowChartElement.template"></ng-template>
-        </div>
+        </flow-chart-draggable-element>
     </div>
 </div>

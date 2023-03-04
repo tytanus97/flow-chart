@@ -1,0 +1,13 @@
+.flow-chart-element {
+    width: 100px;
+    height: 100px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 4px;
+
+    cursor: move;
+}

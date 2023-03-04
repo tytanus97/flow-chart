@@ -1,7 +1,8 @@
-.flow-chart-element {
-    display: inline-block;
-}
-
 .flow-chart-wrapper {
+    position: relative;
     overflow: hidden;
+}
+.panzoom-wrapper {
+    position: absolute;
+    inset: 0;
 }

@@ -1,0 +1,5 @@
+<div class="flow-chart-element" [ngStyle]="{ left: pos.x + 'px', top: pos.y + 'px' }" cdkDrag
+    (cdkDragStarted)="startDragging($event)" (cdkDragEnded)="endDragging($event)" [cdkDragFreeDragPosition]="pos"
+    [cdkDragConstrainPosition]="dragConstrainPoint">
+    <ng-content></ng-content>
+</div>

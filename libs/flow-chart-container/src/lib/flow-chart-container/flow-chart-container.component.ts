@@ -1,29 +1,30 @@
 import { PanzoomFacade } from './../panzoom-handler/panzoomFacade.service';
-import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChild } from '@angular/core';
+import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChild, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { ElementComponent } from '../element/element.component';
-import { CdkDrag, DragDropModule, DragRef, Point } from '@angular/cdk/drag-drop';
 import { PanzoomAdapter } from '../panzoom-handler/panzoomAdapter.service';
+import { DraggableElementComponent } from "../draggable-element/draggable-element.component";
+import { PanzoomEventsService } from '../panzoom-handler/panzoomEvents.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'flow-chart-flow-chart-container',
   standalone: true,
-  imports: [CommonModule, ElementComponent, DragDropModule, NgFor],
   templateUrl: './flow-chart-container.component.html',
   styleUrls: ['./flow-chart-container.component.scss'],
-  providers: [PanzoomAdapter, PanzoomFacade]
+  providers: [PanzoomAdapter, PanzoomFacade, PanzoomEventsService],
+  imports: [CommonModule, ElementComponent, NgFor, DraggableElementComponent]
 })
-export class FlowChartContainerComponent {
+export class FlowChartContainerComponent implements OnInit {
   @Input() width?: number
   @Input() height?: number
 
-  dragConstrainPointMethod = this.dragConstrainPoint.bind(this)
+  panzoomScale$: Observable<number>
 
   panzoomConfig = {
-    maxZoom: 1,
+    maxZoom: 1.5,
     minZoom: 0.1,
   }
-
 
   private _flowChartElements: QueryList<ElementComponent>
 
@@ -43,59 +44,21 @@ export class FlowChartContainerComponent {
     }
   }
 
-  constructor(private readonly panzoomFacade: PanzoomFacade) {
+  constructor(private readonly panzoomFacade: PanzoomFacade,
+    private readonly panzoomEventsService: PanzoomEventsService) {
 
+  }
+
+  ngOnInit(): void {
+    this.panzoomScale$ = this.panzoomEventsService.scaleChanged.asObservable()
   }
 
   onDragStarted() {
     this.panzoomFacade.pausePanzoom()
   }
 
-  onDragEnded(event: any) {
-    const cdkDrag = event.source as CdkDrag;
-    cdkDrag.reset();
+  onDragEnded() {
     this.panzoomFacade.resumePanzoom()
-
   }
-
-  dragConstrainPoint(point: Point, dragRef: DragRef) {
-    const zoomScale = this.panzoomFacade.getScale()
-    let zoomMoveXDifference = 0;
-    let zoomMoveYDifference = 0;
-    console.log(
-      'freeDragPosition dragRef: ' +
-      Math.round(dragRef.getFreeDragPosition().x) +
-      ' / ' +
-      Math.round(dragRef.getFreeDragPosition().y)
-    );
-
-    if (zoomScale != 1) {
-      zoomMoveXDifference =
-        (1 - zoomScale) * dragRef.getFreeDragPosition().x;
-      zoomMoveYDifference =
-        (1 - zoomScale) * dragRef.getFreeDragPosition().y;
-    }
-    console.log(
-      'zoomMoveXDifference x/y: ' +
-      Math.round(zoomMoveXDifference) +
-      ' / ' +
-      Math.round(zoomMoveYDifference)
-    );
-    console.log(
-      'Point x/y: ' + Math.round(point.x) + ' / ' + Math.round(point.y)
-    );
-    console.log(
-      'Sum x/y: ' +
-      Math.round(point.x + zoomMoveXDifference) +
-      ' / ' +
-      Math.round(point.y + zoomMoveYDifference)
-    );
-
-    return {
-      x: point.x + zoomMoveXDifference,
-      y: point.y + zoomMoveYDifference,
-    };
-  }
-
 
 }
