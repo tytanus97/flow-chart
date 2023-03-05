@@ -45,7 +45,6 @@ export class AppComponent {
     }
   }
 
-
   addNewBlock() {
     this.elements.push({
       color: this.getRandomColor(),

@@ -1,10 +1,10 @@
 import { Point } from "@angular/cdk/drag-drop"
-import { Size } from "./size"
+import { Size } from "../models/size"
 import { Injectable } from "@angular/core"
 import { INITIAL_POSITION } from "../drag-handler/draggableElementConstraints"
 
 @Injectable()
-export class Rectangle {
+export class RectangleService {
     size: Size
     position: Point
     centerPosition: Point

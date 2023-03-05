@@ -15,11 +15,17 @@
 }
 
 .element {
-    min-width: 100px;
+    min-width: 200px;
     min-height: 100px;
+
+    max-width: 200px;
 
     background-color: orange;
     @include mixins.flexCenter;
 
     text-align: center;
+
+    border-radius: 5px;
+
+    padding: 4px;
 }

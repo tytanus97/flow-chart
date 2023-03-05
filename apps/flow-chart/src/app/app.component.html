@@ -2,8 +2,7 @@
     <div #flowChartContainer class="flow-chart-container">
         <flow-chart-flow-chart-container>
             <flow-chart-element *ngFor="let element of elements" [id]="element.id">
-                <div class="element"
-                    [ngStyle]="{'width.px':element.width, 'height.px':element.height, 'background-color':element.color}">
+                <div class="element" [ngStyle]="{'background-color':element.color}">
                     <span>{{element.text}}</span>
                 </div>
             </flow-chart-element>

@@ -1,9 +1,11 @@
-<div class="flow-chart-element" #draggableRect
+<div class="flow-chart-element" #draggableRect flowChartResizeGuard
     [ngStyle]="{ left: rectangle.position.x + 'px', top: rectangle.position.y + 'px' }" cdkDrag
-    (cdkDragStarted)="startDragging()" (cdkDragEnded)="endDragging($event)"
+    (cdkDragStarted)="dragStart.emit()" (cdkDragEnded)="endDragging($event)"
     [cdkDragFreeDragPosition]="rectangle.position" [cdkDragConstrainPosition]="dragConstrainPoint">
     <ng-content></ng-content>
     <div class="info size"><span>{{rectangle.size?.width}}</span>,<span>{{rectangle.size?.height}}</span></div>
     <div class="info pos"><span>{{rectangle.position.x}}</span>,<span>{{rectangle.position.y}}</span></div>
+    <div class="info center"><span>{{rectangle.centerPosition?.x}}</span>,<span>{{rectangle.centerPosition?.y}}</span>
+    </div>
 
 </div>
