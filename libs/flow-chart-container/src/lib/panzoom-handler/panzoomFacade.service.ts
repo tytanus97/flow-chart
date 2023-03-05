@@ -33,8 +33,8 @@ export class PanzoomFacade implements IPanzoomFacade, OnDestroy {
         }
     }
     resumePanzoom(): void {
+        console.log('panzoom start')
         if (this._panzoomInstance) {
-            console.log('panzoom start')
             this._panzoomInstance.resume()
         }
     }

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { CommonModule } from '@angular/common';
 import { Point, DragRef, CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { ConstraintDragPointCalculator } from '../drag-handler/constraintDragPointCalculator.service';
+import { INITIAL_POSITION } from '../drag-handler/draggableElementConstraints';
 
 @Component({
   selector: 'flow-chart-draggable-element',
@@ -14,13 +15,13 @@ import { ConstraintDragPointCalculator } from '../drag-handler/constraintDragPoi
 })
 export class DraggableElementComponent {
   @Input() zoomScale = 1;
-  @Input() pos = { x: 0, y: 0 };
+
+  pos = { ...INITIAL_POSITION }
 
   @Output() dragStart = new EventEmitter<void>();
   @Output() dragEnd = new EventEmitter<void>();
 
   constructor(private readonly constraintDragPointCalculator: ConstraintDragPointCalculator) {
-
   }
 
   dragConstrainPoint = (point: Point, dragRef: DragRef) => {
@@ -28,7 +29,6 @@ export class DraggableElementComponent {
   };
 
   startDragging() {
-    console.log('onStart', this.pos)
     this.dragStart.emit();
   }
 
@@ -38,19 +38,12 @@ export class DraggableElementComponent {
     const elementMovingRect = elementMoving.getBoundingClientRect() as DOMRect;
     const elementMovingParentElementRect = elementMoving.parentElement.getBoundingClientRect() as DOMRect;
 
-    this.pos.x =
-      (elementMovingRect.left - elementMovingParentElementRect.left) /
-      this.zoomScale;
-    this.pos.y =
-      (elementMovingRect.top - elementMovingParentElementRect.top) /
-      this.zoomScale;
-
-    console.log('onEnd', this.pos)
-
+    const { x, y } = this.constraintDragPointCalculator.calculatePositionAfterDrag(elementMovingRect, elementMovingParentElementRect, this.zoomScale)
+    this.pos.x = x
+    this.pos.y = y
 
     const cdkDrag = $event.source as CdkDrag;
     cdkDrag.reset();
-
     this.dragEnd.emit();
   }
 }

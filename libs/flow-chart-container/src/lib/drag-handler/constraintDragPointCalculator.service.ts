@@ -21,4 +21,11 @@ export class ConstraintDragPointCalculator {
             y: point.y + zoomMoveYDifference,
         };
     }
+
+    calculatePositionAfterDrag(elementMovingRect: any, elementMovingParentElementRect: any, zoomScale: number): Point {
+        return {
+            x: (elementMovingRect.left - elementMovingParentElementRect.left) / zoomScale,
+            y: (elementMovingRect.top - elementMovingParentElementRect.top) / zoomScale
+        }
+    }
 }
