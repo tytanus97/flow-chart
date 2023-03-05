@@ -3,9 +3,9 @@ import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChild, On
 import { CommonModule, NgFor } from '@angular/common';
 import { ElementComponent } from '../element/element.component';
 import { PanzoomAdapter } from '../panzoom-handler/panzoomAdapter.service';
-import { DraggableElementComponent } from "../draggable-element/draggable-element.component";
 import { PanzoomEventsService } from '../panzoom-handler/panzoomEvents.service';
 import { Observable } from 'rxjs';
+import { DraggableElementComponent } from '@flow-chart/draggable-element';
 
 @Component({
   selector: 'flow-chart-flow-chart-container',
@@ -26,6 +26,7 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit {
     minZoom: 0.1,
     initialX: 0,
     initialY: 0,
+    step: 0.1
   }
 
   @ContentChildren(ElementComponent) flowChartElements: QueryList<ElementComponent>

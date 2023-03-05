@@ -11,3 +11,16 @@
 
     cursor: move;
 }
+
+.info {
+    position: absolute;
+    &.size {
+        top: 0;
+        left: 0;
+    }
+
+    &.pos {
+        right: 0;
+        bottom: 0;
+    }
+}

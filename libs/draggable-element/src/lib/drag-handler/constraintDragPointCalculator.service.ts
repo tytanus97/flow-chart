@@ -17,15 +17,18 @@ export class ConstraintDragPointCalculator {
         }
 
         return {
-            x: point.x + zoomMoveXDifference,
-            y: point.y + zoomMoveYDifference,
+            x: Math.round(point.x + zoomMoveXDifference),
+            y: Math.round(point.y + zoomMoveYDifference),
         };
     }
 
-    calculatePositionAfterDrag(elementMovingRect: any, elementMovingParentElementRect: any, zoomScale: number): Point {
+    calculatePositionAfterDrag(elementMoving: any, zoomScale: number): Point {
+        const elementMovingRect = elementMoving.getBoundingClientRect() as DOMRect;
+        const elementMovingParentElementRect = elementMoving.parentElement.getBoundingClientRect() as DOMRect
+
         return {
-            x: (elementMovingRect.left - elementMovingParentElementRect.left) / zoomScale,
-            y: (elementMovingRect.top - elementMovingParentElementRect.top) / zoomScale
+            x: Math.round((elementMovingRect.left - elementMovingParentElementRect.left) / zoomScale),
+            y: Math.round((elementMovingRect.top - elementMovingParentElementRect.top) / zoomScale)
         }
     }
 }
