@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'flow-chart-element',
@@ -8,6 +8,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./element.component.scss'],
 })
 export class ElementComponent {
-
+  @Input() id: string
   @ViewChild(TemplateRef) template: TemplateRef<HTMLElement>
 }

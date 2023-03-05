@@ -1,5 +1,5 @@
 import { PanzoomFacade } from './../panzoom-handler/panzoomFacade.service';
-import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChild, OnInit } from '@angular/core';
+import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { ElementComponent } from '../element/element.component';
 import { PanzoomAdapter } from '../panzoom-handler/panzoomAdapter.service';
@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   providers: [PanzoomAdapter, PanzoomFacade, PanzoomEventsService],
   imports: [CommonModule, ElementComponent, NgFor, DraggableElementComponent]
 })
-export class FlowChartContainerComponent implements OnInit {
+export class FlowChartContainerComponent implements OnInit, AfterViewInit {
   @Input() width?: number
   @Input() height?: number
 
@@ -24,33 +24,27 @@ export class FlowChartContainerComponent implements OnInit {
   panzoomConfig = {
     maxZoom: 1.5,
     minZoom: 0.1,
+    initialX: 0,
+    initialY: 0,
   }
 
-  private _flowChartElements: QueryList<ElementComponent>
+  @ContentChildren(ElementComponent) flowChartElements: QueryList<ElementComponent>
 
-  @ContentChildren(ElementComponent)
-  set flowChartElements(elements: QueryList<ElementComponent>) {
-    this._flowChartElements = elements
-  }
-
-  get flowChartElements(): QueryList<ElementComponent> {
-    return this._flowChartElements
-  }
-
-  @ViewChild('panzoomWrapper')
-  set panzoomWrapper(panzoomWrapper: ElementRef<HTMLDivElement>) {
-    if (panzoomWrapper) {
-      this.panzoomFacade.createPanzoom(panzoomWrapper.nativeElement, this.panzoomConfig)
-    }
-  }
+  @ViewChild('panzoomWrapper', { static: true }) panzoomWrapper: ElementRef<HTMLDivElement>
 
   constructor(private readonly panzoomFacade: PanzoomFacade,
     private readonly panzoomEventsService: PanzoomEventsService) {
 
   }
+  ngAfterViewInit(): void {
+    if (this.panzoomWrapper) {
+      this.panzoomFacade.createPanzoom(this.panzoomWrapper.nativeElement, this.panzoomConfig)
+    }
+  }
 
   ngOnInit(): void {
     this.panzoomScale$ = this.panzoomEventsService.scaleChanged.asObservable()
+
   }
 
   onDragStarted() {
@@ -59,6 +53,10 @@ export class FlowChartContainerComponent implements OnInit {
 
   onDragEnded() {
     this.panzoomFacade.resumePanzoom()
+  }
+
+  trackByFn(index: number, element: ElementComponent) {
+    return element.id
   }
 
 }

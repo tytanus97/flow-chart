@@ -1,44 +1,34 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Point, DragRef, CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
+import { ConstraintDragPointCalculator } from '../drag-handler/constraintDragPointCalculator.service';
 
 @Component({
   selector: 'flow-chart-draggable-element',
   standalone: true,
   imports: [CommonModule, DragDropModule],
+  providers: [ConstraintDragPointCalculator],
   templateUrl: './draggable-element.component.html',
   styleUrls: ['./draggable-element.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DraggableElementComponent {
   @Input() zoomScale = 1;
   @Input() pos = { x: 0, y: 0 };
 
-  @Output() dragStart = new EventEmitter<any>();
-  @Output() dragEnd = new EventEmitter<any>();
+  @Output() dragStart = new EventEmitter<void>();
+  @Output() dragEnd = new EventEmitter<void>();
+
+  constructor(private readonly constraintDragPointCalculator: ConstraintDragPointCalculator) {
+
+  }
 
   dragConstrainPoint = (point: Point, dragRef: DragRef) => {
-
-
-    let zoomMoveXDifference = 0;
-    let zoomMoveYDifference = 0;
-
-    if (this.zoomScale != 1) {
-      zoomMoveXDifference =
-        (1 - this.zoomScale) * dragRef.getFreeDragPosition().x;
-      zoomMoveYDifference =
-        (1 - this.zoomScale) * dragRef.getFreeDragPosition().y;
-    }
-
-
-
-    return {
-      x: point.x + zoomMoveXDifference,
-      y: point.y + zoomMoveYDifference,
-    };
+    return this.constraintDragPointCalculator.calculateConstraintPoint(point, dragRef, this.zoomScale)
   };
 
-  startDragging($event: any) {
-    console.log('START');
+  startDragging() {
+    console.log('onStart', this.pos)
     this.dragStart.emit();
   }
 
@@ -47,8 +37,6 @@ export class DraggableElementComponent {
     const elementMoving = $event.source.getRootElement();
     const elementMovingRect = elementMoving.getBoundingClientRect() as DOMRect;
     const elementMovingParentElementRect = elementMoving.parentElement.getBoundingClientRect() as DOMRect;
-    /* The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
-    This method returns a DOMRect object with eight properties: left, top, right, bottom, x, y, width, height. https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_element_getboundingclientrect*/
 
     this.pos.x =
       (elementMovingRect.left - elementMovingParentElementRect.left) /
@@ -56,6 +44,9 @@ export class DraggableElementComponent {
     this.pos.y =
       (elementMovingRect.top - elementMovingParentElementRect.top) /
       this.zoomScale;
+
+    console.log('onEnd', this.pos)
+
 
     const cdkDrag = $event.source as CdkDrag;
     cdkDrag.reset();

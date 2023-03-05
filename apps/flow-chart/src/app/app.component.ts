@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ElementComponent, FlowChartContainerComponent } from '@flow-chart/flow-chart-container'
-
+import { v4 as uuid } from 'uuid';
 @Component({
   selector: 'flow-chart-root',
   templateUrl: './app.component.html',
@@ -32,7 +32,8 @@ export class AppComponent {
       text: '1',
       width: 100,
       height: 100,
-      color: 'red'
+      color: 'red',
+      id: uuid()
     }
   ]
 
@@ -50,7 +51,8 @@ export class AppComponent {
       color: this.getRandomColor(),
       height: 100,
       width: 100,
-      text: Math.round((Math.random() * 10)).toString()
+      text: Math.round((Math.random() * 10)).toString(),
+      id: uuid()
     })
   }
 

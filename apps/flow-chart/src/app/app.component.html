@@ -1,7 +1,7 @@
 <div class="flow-chart-wrapper">
     <div #flowChartContainer class="flow-chart-container">
         <flow-chart-flow-chart-container>
-            <flow-chart-element *ngFor="let element of elements">
+            <flow-chart-element *ngFor="let element of elements" [id]="element.id">
                 <div class="element"
                     [ngStyle]="{'width.px':element.width, 'height.px':element.height, 'background-color':element.color}">
                     <span>{{element.text}}</span>

@@ -1,7 +1,7 @@
 .flow-chart-element {
-    width: 100px;
-    height: 100px;
-    position: relative;
+    position: absolute;
+
+    width: min-content;
 
     display: flex;
     justify-content: center;

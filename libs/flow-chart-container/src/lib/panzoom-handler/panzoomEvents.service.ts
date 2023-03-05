@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class PanzoomEventsService {
-    scaleChanged: Subject<number> = new Subject<number>()
+    scaleChanged: BehaviorSubject<number> = new BehaviorSubject<number>(1)
 }
