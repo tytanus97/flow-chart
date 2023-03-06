@@ -40,7 +40,7 @@ export class DraggableElementComponent extends DraggableRectangle {
 
     const { x, y } = this.constraintDragPointCalculator.calculatePositionAfterDrag(elementMoving, this.zoomScale)
 
-    this.restangleRef.updatePosition({ x, y })
+    this.restangleRef.setPosition({ x, y })
 
     const cdkDrag = $event.source as CdkDrag;
     cdkDrag.reset();

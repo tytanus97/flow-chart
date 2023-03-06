@@ -1,12 +1,13 @@
-<div class="flow-chart-element" #draggableRect flowChartResizeGuard [ngClass]="{'dragged': isDragged}"
+<div class="flow-chart-element" #draggableRect flowChartResizeGuard
+    [ngClass]="{'dragged': isDragged,'colliding':isDragged}"
     [ngStyle]="{ left: restangleRef.position.x + 'px', top: restangleRef.position.y + 'px' }" cdkDrag
     (cdkDragStarted)="dragStarted()" (cdkDragEnded)="endDragging($event)"
     [cdkDragFreeDragPosition]="restangleRef.position" [cdkDragConstrainPosition]="dragConstrainPoint">
     <ng-content></ng-content>
+    <div class="info cover" [ngClass]="{'colliding':isDragged}"></div>
     <div class="info size"><span>{{restangleRef.size?.width}}</span>,<span>{{restangleRef.size?.height}}</span></div>
     <div class="info pos"><span>{{restangleRef.position.x}}</span>,<span>{{restangleRef.position.y}}</span></div>
     <div class="info center">
         <span>{{restangleRef.centerPosition?.x}}</span>,<span>{{restangleRef.centerPosition?.y}}</span>
     </div>
-
 </div>

@@ -18,7 +18,7 @@ export class RectangleService {
         this.setCenter(size)
     }
 
-    updatePosition(point: Point) {
+    setPosition(point: Point) {
         this.position.x = point.x
         this.position.y = point.y
     }
