@@ -24,3 +24,9 @@
         bottom: 0;
     }
 }
+
+.dragged {
+    outline-style: dashed;
+    outline-width: 5px;
+    outline-color: green;
+}

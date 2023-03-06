@@ -16,6 +16,8 @@ import { ResizeObserverDirective } from '../resize-handler/resizeHandler.directi
 })
 export class DraggableElementComponent {
 
+  isDragged: boolean
+
   @Input() zoomScale = 1;
   @Output() dragStart = new EventEmitter<void>();
   @Output() dragEnd = new EventEmitter<void>();
@@ -32,6 +34,8 @@ export class DraggableElementComponent {
   };
 
   endDragging($event: any) {
+    this.isDragged = false
+
     const elementMoving = $event.source.getRootElement();
 
     const { x, y } = this.constraintDragPointCalculator.calculatePositionAfterDrag(elementMoving, this.zoomScale)
@@ -41,5 +45,12 @@ export class DraggableElementComponent {
     const cdkDrag = $event.source as CdkDrag;
     cdkDrag.reset();
     this.dragEnd.emit();
+  }
+
+  dragStarted() {
+    this.isDragged = true
+
+
+    this.dragStart.emit()
   }
 }
