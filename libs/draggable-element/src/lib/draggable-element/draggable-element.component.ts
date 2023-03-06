@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Point, DragRef, CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { ConstraintDragPointCalculator } from '../drag-handler/constraintDragPointCalculator.service';
 import { ResizeObserverDirective } from '../resize-handler/resizeHandler.directive';
+import { DraggableRectangle } from '../rectangle/draggableRectangle';
 
 @Component({
   selector: 'flow-chart-draggable-element',
@@ -14,7 +15,7 @@ import { ResizeObserverDirective } from '../resize-handler/resizeHandler.directi
   styleUrls: ['./draggable-element.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DraggableElementComponent {
+export class DraggableElementComponent extends DraggableRectangle {
 
   isDragged: boolean
 
@@ -24,9 +25,8 @@ export class DraggableElementComponent {
 
   @ViewChild('draggableRect', { static: true }) viewRectangle: ElementRef<HTMLDivElement>
 
-  constructor(
-    private readonly constraintDragPointCalculator: ConstraintDragPointCalculator,
-    public readonly rectangle: RectangleService) {
+  constructor(private readonly constraintDragPointCalculator: ConstraintDragPointCalculator) {
+    super()
   }
 
   dragConstrainPoint = (point: Point, dragRef: DragRef) => {
@@ -39,8 +39,8 @@ export class DraggableElementComponent {
     const elementMoving = $event.source.getRootElement();
 
     const { x, y } = this.constraintDragPointCalculator.calculatePositionAfterDrag(elementMoving, this.zoomScale)
-    this.rectangle.position.x = x
-    this.rectangle.position.y = y
+
+    this.restangleRef.updatePosition({ x, y })
 
     const cdkDrag = $event.source as CdkDrag;
     cdkDrag.reset();
@@ -49,8 +49,6 @@ export class DraggableElementComponent {
 
   dragStarted() {
     this.isDragged = true
-
-
     this.dragStart.emit()
   }
 }

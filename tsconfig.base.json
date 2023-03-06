@@ -16,6 +16,7 @@
     "strictNullChecks": false,
     "baseUrl": ".",
     "paths": {
+      "@flow-chart/collision-module": ["libs/collision-module/src/index.ts"],
       "@flow-chart/draggable-element": ["libs/draggable-element/src/index.ts"],
       "@flow-chart/flow-chart-container": [
         "libs/flow-chart-container/src/index.ts"

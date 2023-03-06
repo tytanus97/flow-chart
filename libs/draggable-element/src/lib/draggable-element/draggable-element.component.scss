@@ -1,3 +1,9 @@
+@mixin debugDraggedBlock {
+    outline-style: dashed;
+    outline-width: 5px;
+    outline-color: green;
+}
+
 .flow-chart-element {
     position: absolute;
 
@@ -26,7 +32,6 @@
 }
 
 .dragged {
-    outline-style: dashed;
-    outline-width: 5px;
-    outline-color: green;
+    @include debugDraggedBlock;
+    z-index: 999;
 }
