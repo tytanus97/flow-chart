@@ -1,3 +1,4 @@
+import { PanzoomConfigService } from './../panzoom-handler/panzoomConfig.service';
 import { PanzoomFacade } from './../panzoom-handler/panzoomFacade.service';
 import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
@@ -12,7 +13,7 @@ import { DraggableElementComponent } from '@flow-chart/draggable-element';
   standalone: true,
   templateUrl: './flow-chart-container.component.html',
   styleUrls: ['./flow-chart-container.component.scss'],
-  providers: [PanzoomAdapter, PanzoomFacade, PanzoomEventsService],
+  providers: [PanzoomAdapter, PanzoomFacade, PanzoomEventsService, PanzoomConfigService],
   imports: [CommonModule, ElementComponent, NgFor, DraggableElementComponent]
 })
 export class FlowChartContainerComponent implements OnInit, AfterViewInit {
@@ -21,25 +22,20 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit {
 
   panzoomScale$: Observable<number>
 
-  panzoomConfig = {
-    maxZoom: 1.5,
-    minZoom: 0.1,
-    initialX: 0,
-    initialY: 0,
-    step: 0.1
-  }
+
 
   @ContentChildren(ElementComponent) flowChartElements: QueryList<ElementComponent>
 
   @ViewChild('panzoomWrapper', { static: true }) panzoomWrapper: ElementRef<HTMLDivElement>
 
   constructor(private readonly panzoomFacade: PanzoomFacade,
-    private readonly panzoomEventsService: PanzoomEventsService) {
+    private readonly panzoomEventsService: PanzoomEventsService,
+    private readonly panzoomConfigService: PanzoomConfigService) {
 
   }
   ngAfterViewInit(): void {
     if (this.panzoomWrapper) {
-      this.panzoomFacade.createPanzoom(this.panzoomWrapper.nativeElement, this.panzoomConfig)
+      this.panzoomFacade.createPanzoom(this.panzoomWrapper.nativeElement, this.panzoomConfigService.getConfig())
     }
   }
 
