@@ -12,8 +12,7 @@ import { DraggableRectangle } from '../rectangle/draggableRectangle';
   imports: [CommonModule, DragDropModule, ResizeObserverDirective],
   providers: [ConstraintDragPointCalculator, RectangleService],
   templateUrl: './draggable-element.component.html',
-  styleUrls: ['./draggable-element.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./draggable-element.component.scss']
 })
 export class DraggableElementComponent extends DraggableRectangle {
 

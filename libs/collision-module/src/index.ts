@@ -1,1 +1,2 @@
-export * from './lib/collision-module.module';
+export * from './lib/collisionDetection.service'
+export * from './lib/draggableElementsHolder.service'
