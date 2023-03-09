@@ -49,7 +49,6 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit, OnCha
 
   ngOnInit(): void {
     this.panzoomScale$ = this.panzoomEventsService.scaleChanged.asObservable()
-
   }
 
   onDragStarted() {

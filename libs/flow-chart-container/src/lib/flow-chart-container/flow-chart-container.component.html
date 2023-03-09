@@ -2,9 +2,10 @@
     class="flow-chart-wrapper drag-boundary">
 
     <div #panzoomWrapper class="panzoom-wrapper">
-        <flow-chart-draggable-element *ngFor="let flowChartElement of flowChartElements; trackBy: trackByFn"
-            [id]="flowChartElement.id" (dragStart)="onDragStarted()" (dragEnd)="onDragEnded()"
-            (mousedown)="onDragStarted()" (mouseup)="onDragEnded()" [zoomScale]="panzoomScale$ | async">
+        <flow-chart-draggable-element #flowChartDraggableElement
+            *ngFor="let flowChartElement of flowChartElements; trackBy: trackByFn" [id]="flowChartElement.id"
+            (dragStart)="onDragStarted()" (dragEnd)="onDragEnded()" (mousedown)="onDragStarted()"
+            (mouseup)="onDragEnded()" [zoomScale]="panzoomScale$ | async">
 
             <ng-template [ngTemplateOutlet]="flowChartElement.template"></ng-template>
         </flow-chart-draggable-element>

@@ -1,21 +1,20 @@
 import { ICollidable } from '@flow-chart/draggable-element';
 import { Injectable } from '@angular/core';
 import { DraggableElementsHolderService } from './draggableElementsHolder.service';
+import { BLOCK_MARGIN } from './collisionConsts';
 @Injectable()
 export class CollisionDetectionService {
     constructor(private readonly draggableElementsHolderService: DraggableElementsHolderService) { }
 
     checkCollisions() {
         const rectangles = this.draggableElementsHolderService.draggableElements
-
         for (let i = 0; i < rectangles.length; i++) {
+            let collides = false
             for (let j = 0; j < rectangles.length; j++) {
                 if (rectangles[i] === rectangles[j]) continue
-
-                const collides = this.collidesWith(rectangles[i], rectangles[j])
-                rectangles[i].isColliding = collides
-                rectangles[j].isColliding = collides
+                collides = collides || this.collidesWith(rectangles[i], rectangles[j])
             }
+            rectangles[i].isColliding = collides
         }
     }
 
