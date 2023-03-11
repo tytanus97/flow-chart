@@ -1,15 +1,14 @@
-import { CollisionDetectionService } from './collisionDetection.service';
 import { Injectable } from '@angular/core';
 import { ICollidable } from '@flow-chart/draggable-element';
 @Injectable()
-export class DraggableElementsHolderService {
-    private _draggableElements: ICollidable[]
+export class CollidableElementsHolderService {
+    private _collidableElements: ICollidable[]
 
-    set draggableElements(draggableElements: ICollidable[]) {
-        this._draggableElements = draggableElements
+    set collidableElements(collidableElements: ICollidable[]) {
+        this._collidableElements = collidableElements
     }
 
-    get draggableElements(): ICollidable[] {
-        return this._draggableElements
+    get collidableElements(): ICollidable[] {
+        return this._collidableElements
     }
 }

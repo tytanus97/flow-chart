@@ -1,20 +1,32 @@
+import { CollisionResolverService } from './collisionResolver.service';
 import { ICollidable } from '@flow-chart/draggable-element';
 import { Injectable } from '@angular/core';
-import { DraggableElementsHolderService } from './draggableElementsHolder.service';
+import { CollidableElementsHolderService } from './draggableElementsHolder.service';
 import { BLOCK_MARGIN } from './collisionConsts';
 @Injectable()
 export class CollisionDetectionService {
-    constructor(private readonly draggableElementsHolderService: DraggableElementsHolderService) { }
+    constructor(private readonly draggableElementsHolderService: CollidableElementsHolderService,
+        private readonly collisionResolverService: CollisionResolverService) { }
 
     checkCollisions() {
-        const rectangles = this.draggableElementsHolderService.draggableElements
+        const rectangles = this.draggableElementsHolderService.collidableElements
         for (let i = 0; i < rectangles.length; i++) {
-            let collides = false
+            const collisionArr: string[] = []
+
             for (let j = 0; j < rectangles.length; j++) {
+                // if is the same rect
                 if (rectangles[i] === rectangles[j]) continue
-                collides = collides || this.collidesWith(rectangles[i], rectangles[j])
+                if (!collisionArr.includes(rectangles[j].getId())) {
+                    collisionArr.push(rectangles[j].getId())
+
+                    const collides = this.collidesWith(rectangles[i], rectangles[j])
+                    if (collides) {
+                        this.collisionResolverService.resolveCollision(rectangles[i], rectangles[j])
+                    }
+                }
+
             }
-            rectangles[i].isColliding = collides
+            //  rectangles[i].isColliding = collides
         }
     }
 
@@ -23,6 +35,7 @@ export class CollisionDetectionService {
             this.collidesVertically(firstRect, secondRect)
     }
 
+    // TODO write it simpler i.e more abstract
     private collidesHorizontally(firstRect: ICollidable, secondRect: ICollidable): boolean {
         const { x: firstRectX } = firstRect.getPosition()
         const { width: firstRectWidth } = firstRect.getSize()
