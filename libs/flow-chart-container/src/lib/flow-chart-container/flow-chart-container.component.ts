@@ -7,7 +7,7 @@ import { PanzoomAdapter } from '../panzoom-handler/panzoomAdapter.service';
 import { PanzoomEventsService } from '../panzoom-handler/panzoomEvents.service';
 import { Observable } from 'rxjs';
 import { DraggableElementComponent, ICollidable } from '@flow-chart/draggable-element';
-import { CollidableElementsHolderService, CollisionDetectionService, CollisionModule } from '@flow-chart/collision-module';
+import { CollidableElementsHolderService, CollisionCheckerService, CollisionModule } from '@flow-chart/collision-module';
 
 @Component({
   selector: 'flow-chart-flow-chart-container',
@@ -35,7 +35,7 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit {
     private readonly panzoomEventsService: PanzoomEventsService,
     private readonly panzoomConfigService: PanzoomConfigService,
     private readonly draggableElementsHolderService: CollidableElementsHolderService,
-    private readonly collisionDetectionService: CollisionDetectionService) {
+    private readonly collisionChecker: CollisionCheckerService) {
   }
 
   ngAfterViewInit(): void {
@@ -54,7 +54,15 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit {
 
   onDragEnded() {
     this.panzoomFacade.resumePanzoom()
-    this.collisionDetectionService.checkCollisions()
+    this.collisionChecker.checkCollisions()
+  }
+
+  onMouseDown() {
+    this.panzoomFacade.resumePanzoom()
+  }
+
+  onMouseUp() {
+    this.panzoomFacade.pausePanzoom()
   }
 
   trackByFn(index: number, element: ElementComponent) {

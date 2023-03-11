@@ -4,21 +4,23 @@ import { ICollidable } from '../interfaces/ICollidable';
 import { Point } from '@angular/cdk/drag-drop';
 import { Size } from '../models/size';
 export class DraggableRectangle extends ICollidable {
-    restangleRef: RectangleService = inject(RectangleService)
-
+    rectangleRef: RectangleService = inject(RectangleService)
+    id: string
     override getPosition(): Point {
-        return this.restangleRef.position
+        return this.rectangleRef.position
     }
     override getCenterPosition(): Point {
-        return this.restangleRef.centerPosition
+        return this.rectangleRef.centerPosition
     }
     override getSize(): Size {
-        return this.restangleRef.size
+        return this.rectangleRef.size
     }
 
     override setPosition(point: Point): Point {
-        this.restangleRef.setPosition(point)
+        this.rectangleRef.setPosition(point)
         return point
     }
-
+    override getId(): string {
+        return this.id
+    }
 }

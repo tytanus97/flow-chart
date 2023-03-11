@@ -11,7 +11,6 @@ export class CollisionResolverService {
         const yMag = ((rectA.getSize().height / 2) + rectB.getSize().height / 2) - Math.abs(rectA.getCenterPosition().y - rectB.getCenterPosition().y)
         const xMag = ((rectA.getSize().width / 2) + rectB.getSize().width / 2) - Math.abs(rectA.getCenterPosition().x - rectB.getCenterPosition().x)
 
-        console.log('log datra');
 
         console.log('yDiff', yDiff)
         console.log('xDiff', xDiff)

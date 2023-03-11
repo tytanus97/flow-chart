@@ -1,32 +1,33 @@
 import { Point } from "@angular/cdk/drag-drop"
 import { Size } from "../models/size"
 import { Injectable } from "@angular/core"
-import { INITIAL_POSITION } from "../drag-handler/draggableElementConstraints"
+import { INITIAL_POSITION, INITIAL_SIZE } from "../drag-handler/draggableElementConstraints"
 
 @Injectable()
 export class RectangleService {
-    size: Size
-    position: Point
+    size: Size = { ...INITIAL_SIZE }
+    position: Point = { ...INITIAL_POSITION }
     centerPosition: Point
 
     constructor() {
-        this.position = { ...INITIAL_POSITION }
+        this.setCenter()
     }
 
     setSize(size: Size) {
         this.size = size
-        this.setCenter(size)
+        this.setCenter()
     }
 
     setPosition(point: Point) {
         this.position.x = point.x
         this.position.y = point.y
+        this.setCenter()
     }
 
-    private setCenter(size: Size) {
+    private setCenter() {
         this.centerPosition = {
-            x: this.position.x + (size.width / 2),
-            y: this.position.y + (size.height / 2)
+            x: this.position.x + (this.size.width / 2),
+            y: this.position.y + (this.size.height / 2)
         }
     }
 }

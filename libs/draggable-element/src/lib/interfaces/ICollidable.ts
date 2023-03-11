@@ -9,4 +9,5 @@ export abstract class ICollidable {
     abstract getCenterPosition(): Point
     abstract getSize(): Size
     abstract setPosition(point: Point): Point
+    abstract getId(): string
 }

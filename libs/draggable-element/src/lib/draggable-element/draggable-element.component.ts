@@ -18,6 +18,8 @@ export class DraggableElementComponent extends DraggableRectangle {
 
   isDragged: boolean
 
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input('id') set rectId(id: string) { this.id = id }
   @Input() zoomScale = 1;
   @Output() dragStart = new EventEmitter<void>();
   @Output() dragEnd = new EventEmitter<void>();
@@ -39,7 +41,7 @@ export class DraggableElementComponent extends DraggableRectangle {
 
     const { x, y } = this.constraintDragPointCalculator.calculatePositionAfterDrag(elementMoving, this.zoomScale)
 
-    this.restangleRef.setPosition({ x, y })
+    this.rectangleRef.setPosition({ x, y })
 
     const cdkDrag = $event.source as CdkDrag;
     cdkDrag.reset();

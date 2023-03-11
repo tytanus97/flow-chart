@@ -1,36 +1,9 @@
-import { CollisionResolverService } from './collisionResolver.service';
 import { ICollidable } from '@flow-chart/draggable-element';
 import { Injectable } from '@angular/core';
-import { CollidableElementsHolderService } from './draggableElementsHolder.service';
-import { BLOCK_MARGIN } from './collisionConsts';
 @Injectable()
 export class CollisionDetectionService {
-    constructor(private readonly draggableElementsHolderService: CollidableElementsHolderService,
-        private readonly collisionResolverService: CollisionResolverService) { }
 
-    checkCollisions() {
-        const rectangles = this.draggableElementsHolderService.collidableElements
-        for (let i = 0; i < rectangles.length; i++) {
-            const collisionArr: string[] = []
-
-            for (let j = 0; j < rectangles.length; j++) {
-                // if is the same rect
-                if (rectangles[i] === rectangles[j]) continue
-                if (!collisionArr.includes(rectangles[j].getId())) {
-                    collisionArr.push(rectangles[j].getId())
-
-                    const collides = this.collidesWith(rectangles[i], rectangles[j])
-                    if (collides) {
-                        this.collisionResolverService.resolveCollision(rectangles[i], rectangles[j])
-                    }
-                }
-
-            }
-            //  rectangles[i].isColliding = collides
-        }
-    }
-
-    private collidesWith(firstRect: ICollidable, secondRect: ICollidable): boolean {
+    collidesWith(firstRect: ICollidable, secondRect: ICollidable): boolean {
         return this.collidesHorizontally(firstRect, secondRect) &&
             this.collidesVertically(firstRect, secondRect)
     }
