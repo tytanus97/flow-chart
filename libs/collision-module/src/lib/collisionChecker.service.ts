@@ -10,18 +10,19 @@ export class CollisionCheckerService {
         private readonly collisionResolverService: CollisionResolverService,
         private readonly collisionDetectionService: CollisionDetectionService) { }
 
-    checkCollisions(collidable: ICollidable) {
+    checkCollisions(collidable?: ICollidable) {
         const collidables = this.draggableElementsHolderService.collidableElements
-        this.checkCollisionForCollidable(collidable, collidables)
+        this.checkCollisionForCollidable(collidable || collidables[collidables.length - 1], collidables)
     }
 
-    private checkCollisionForCollidable(origin: ICollidable, allCollidables: ICollidable[]) {
+    // TODO optimize
+    private checkCollisionForCollidable(origin: ICollidable, allCollidables: ICollidable[], prevOrigin?: ICollidable) {
         for (let i = 0; i < allCollidables.length; i++) {
             const secondCollidable = allCollidables[i]
-            if (origin === secondCollidable) continue
+            if ((origin === secondCollidable) || (prevOrigin && prevOrigin === secondCollidable)) continue
             if (this.collisionDetectionService.collidesWith(origin, secondCollidable)) {
                 this.collisionResolverService.resolveCollision(origin, secondCollidable)
-                this.checkCollisionForCollidable(secondCollidable, allCollidables)
+                this.checkCollisionForCollidable(secondCollidable, allCollidables, origin)
             }
         }
     }

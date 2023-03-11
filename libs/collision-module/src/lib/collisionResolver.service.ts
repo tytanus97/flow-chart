@@ -24,8 +24,12 @@ export class CollisionResolverService {
     }
 
     private centerDifference(rectA: ICollidable, rectB: ICollidable) {
-        const yDiff = rectA.getCenterPosition().y - rectB.getCenterPosition().y
+        let yDiff = rectA.getCenterPosition().y - rectB.getCenterPosition().y
         const xDiff = rectA.getCenterPosition().x - rectB.getCenterPosition().x
+
+        if (yDiff === 0 && xDiff === 0) {
+            yDiff = -1
+        }
 
         return { xDiff, yDiff }
     }

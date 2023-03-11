@@ -4,8 +4,10 @@ import { Point } from '@angular/cdk/drag-drop';
 import { ICollidable } from '@flow-chart/collision-module';
 import { Size } from '@flow-chart/shared';
 export class DraggableRectangle extends ICollidable {
+
     rectangleRef: RectangleService = inject(RectangleService)
     id: string
+
     override getPosition(): Point {
         return this.rectangleRef.position
     }
