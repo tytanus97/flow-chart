@@ -17,7 +17,6 @@ export class ResizeObserverDirective implements OnDestroy, OnInit {
 
     private onSizeChanged(entries: ResizeObserverEntry[]) {
         const { inlineSize, blockSize } = entries[0].borderBoxSize[0]
-        console.log('entries', inlineSize, blockSize);
         this.rectangle.setSize({ height: blockSize, width: inlineSize })
         this.changeDetectorRef.detectChanges()
     }

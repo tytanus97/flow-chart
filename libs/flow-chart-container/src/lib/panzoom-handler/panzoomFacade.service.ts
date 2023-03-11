@@ -18,22 +18,18 @@ export class PanzoomFacade implements IPanzoomFacade, OnDestroy {
         }
     }
     createPanzoom(element: HTMLElement, options: PanZoomOptions) {
-        console.log('create panzoom')
         this._panzoomInstance = this.panzoomAdapter.createPanzoom(element, options)
 
         this._panzoomInstance.on('transform', (event: any) => {
-            console.log(event.getTransform())
             this.panzoomEventsService.scaleChanged.next(this.getScale())
         })
     }
     pausePanzoom(): void {
         if (this._panzoomInstance) {
-            console.log('panzoom stop')
             this._panzoomInstance.pause()
         }
     }
     resumePanzoom(): void {
-        console.log('panzoom start')
         if (this._panzoomInstance) {
             this._panzoomInstance.resume()
         }
