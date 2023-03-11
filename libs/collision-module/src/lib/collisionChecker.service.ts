@@ -10,17 +10,15 @@ export class CollisionCheckerService {
         private readonly collisionResolverService: CollisionResolverService,
         private readonly collisionDetectionService: CollisionDetectionService) { }
 
-    checkCollisions() {
+    checkCollisions(collidable: ICollidable) {
         const collidables = this.draggableElementsHolderService.collidableElements
         const collisionMap: Map<string, string[]> = new Map()
 
-        for (let i = 0; i < collidables.length; i++) {
+        const firstCollidable = collidable
+        collisionMap.set(firstCollidable.getId(), collisionMap.get(firstCollidable.getId()) || [])
 
-            const firstCollidable = collidables[i]
-            collisionMap.set(firstCollidable.getId(), collisionMap.get(firstCollidable.getId()) || [])
+        this.checkCollisionForCollidable(firstCollidable, collidables, collisionMap)
 
-            this.checkCollisionForCollidable(firstCollidable, collidables, collisionMap)
-        }
     }
 
     private checkCollisionForCollidable(firstCollidable: ICollidable, allCollidables: ICollidable[], collisionMap: Map<string, string[]>) {

@@ -1,1 +1,1 @@
-export const BLOCK_MARGIN = 0
+export const BLOCK_MARGIN = 32
