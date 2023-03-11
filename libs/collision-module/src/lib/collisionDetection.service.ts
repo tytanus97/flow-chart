@@ -1,5 +1,5 @@
-import { ICollidable } from '@flow-chart/draggable-element';
 import { Injectable } from '@angular/core';
+import { ICollidable } from './interfaces/ICollidable';
 @Injectable()
 export class CollisionDetectionService {
 

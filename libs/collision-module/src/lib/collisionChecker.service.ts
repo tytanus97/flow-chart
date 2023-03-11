@@ -1,6 +1,5 @@
-import { ICollidable } from '@flow-chart/draggable-element';
 import { Injectable } from '@angular/core';
-import { CollisionDetectionService } from '@flow-chart/collision-module';
+import { CollisionDetectionService, ICollidable } from '@flow-chart/collision-module';
 import { CollisionResolverService } from "./collisionResolver.service"
 import { CollidableElementsHolderService } from "./draggableElementsHolder.service"
 

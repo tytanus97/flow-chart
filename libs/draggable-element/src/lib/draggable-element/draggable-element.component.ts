@@ -1,5 +1,5 @@
 import { RectangleService } from '../rectangle/rectangle.service';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ElementRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Point, DragRef, CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { ConstraintDragPointCalculator } from '../drag-handler/constraintDragPointCalculator.service';

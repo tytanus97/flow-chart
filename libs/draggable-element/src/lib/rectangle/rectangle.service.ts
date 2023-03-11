@@ -1,7 +1,7 @@
 import { Point } from "@angular/cdk/drag-drop"
-import { Size } from "../models/size"
 import { Injectable } from "@angular/core"
 import { INITIAL_POSITION, INITIAL_SIZE } from "../drag-handler/draggableElementConstraints"
+import { Size } from "@flow-chart/shared"
 
 @Injectable()
 export class RectangleService {

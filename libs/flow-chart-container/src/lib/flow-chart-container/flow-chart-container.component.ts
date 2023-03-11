@@ -6,8 +6,8 @@ import { ElementComponent } from '../element/element.component';
 import { PanzoomAdapter } from '../panzoom-handler/panzoomAdapter.service';
 import { PanzoomEventsService } from '../panzoom-handler/panzoomEvents.service';
 import { Observable } from 'rxjs';
-import { DraggableElementComponent, ICollidable } from '@flow-chart/draggable-element';
-import { CollidableElementsHolderService, CollisionCheckerService, CollisionModule } from '@flow-chart/collision-module';
+import { DraggableElementComponent } from '@flow-chart/draggable-element';
+import { CollidableElementsHolderService, CollisionCheckerService, CollisionModule, ICollidable } from '@flow-chart/collision-module';
 
 @Component({
   selector: 'flow-chart-flow-chart-container',
@@ -58,11 +58,11 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit {
   }
 
   onMouseDown() {
-    this.panzoomFacade.resumePanzoom()
+    this.panzoomFacade.pausePanzoom()
   }
 
   onMouseUp() {
-    this.panzoomFacade.pausePanzoom()
+    this.panzoomFacade.resumePanzoom()
   }
 
   trackByFn(index: number, element: ElementComponent) {

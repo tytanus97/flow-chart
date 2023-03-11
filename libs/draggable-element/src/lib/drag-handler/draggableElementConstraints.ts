@@ -1,5 +1,5 @@
-import { Size } from './../models/size';
 import { Point } from '@angular/cdk/drag-drop';
+import { Size } from '@flow-chart/shared';
 export const INITIAL_POSITION: Point = {
     x: 0,
     y: 0

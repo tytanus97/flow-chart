@@ -20,7 +20,8 @@
       "@flow-chart/draggable-element": ["libs/draggable-element/src/index.ts"],
       "@flow-chart/flow-chart-container": [
         "libs/flow-chart-container/src/index.ts"
-      ]
+      ],
+      "@flow-chart/shared": ["libs/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
