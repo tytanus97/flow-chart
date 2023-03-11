@@ -12,20 +12,13 @@ export class CollisionCheckerService {
 
     checkCollisions(collidable: ICollidable) {
         const collidables = this.draggableElementsHolderService.collidableElements
-        // check collision first for origin
-        const origin = collidable
-
-        this.checkCollisionForCollidable(origin, collidables)
-
+        this.checkCollisionForCollidable(collidable, collidables)
     }
 
     private checkCollisionForCollidable(origin: ICollidable, allCollidables: ICollidable[]) {
-        console.log('check')
         for (let i = 0; i < allCollidables.length; i++) {
             const secondCollidable = allCollidables[i]
-
             if (origin === secondCollidable) continue
-
             if (this.collisionDetectionService.collidesWith(origin, secondCollidable)) {
                 this.collisionResolverService.resolveCollision(origin, secondCollidable)
                 this.checkCollisionForCollidable(secondCollidable, allCollidables)
