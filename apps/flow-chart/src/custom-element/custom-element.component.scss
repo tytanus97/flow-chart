@@ -1,0 +1,17 @@
+@use "mixins" as mixins;
+.element {
+    min-width: 200px;
+    min-height: 100px;
+
+    max-width: 200px;
+
+    background-color: var(--block-bg-color);
+    @include mixins.flexCenter;
+    flex-direction: column;
+
+    text-align: center;
+
+    border-radius: 5px;
+
+    padding: 4px;
+}

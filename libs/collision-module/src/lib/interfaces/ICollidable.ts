@@ -1,5 +1,5 @@
 import { Point } from "@angular/cdk/drag-drop";
-import { Size } from "@flow-chart/shared";
+import { Size } from "../../../../shared/src/lib/models/size";
 
 export abstract class ICollidable {
 

@@ -8,7 +8,9 @@ export class PanzoomConfigService {
             minZoom: 0.1,
             initialX: 0,
             initialY: 0,
-            step: 0.1
+            step: 0.1,
+            zoomDoubleClickSpeed: 1,
+            smoothScroll: false
         }
     }
 }

@@ -1,7 +1,5 @@
 @mixin debugDraggedBlock {
-    outline-style: dashed;
-    outline-width: 5px;
-    outline-color: green;
+    box-shadow: 5px 5px 20px -5px rgba(3, 3, 3, 0.767);
 }
 
 .flow-chart-element {

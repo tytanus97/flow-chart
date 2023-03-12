@@ -25,9 +25,11 @@ export class RectangleService {
     }
 
     private setCenter() {
+
         this.centerPosition = {
             x: this.position.x + (this.size.width / 2),
             y: this.position.y + (this.size.height / 2)
         }
+        console.log('new center', this.centerPosition);
     }
 }

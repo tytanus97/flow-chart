@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ElementComponent, FlowChartContainerComponent } from '@flow-chart/flow-chart-container'
 import { v4 as uuid } from 'uuid';
+import { CustomElementComponent } from '../custom-element/custom-element.component';
 @Component({
   selector: 'flow-chart-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [FlowChartContainerComponent, ElementComponent, CommonModule],
+  imports: [FlowChartContainerComponent, ElementComponent, CommonModule, CustomElementComponent],
   providers: []
 })
 export class AppComponent {

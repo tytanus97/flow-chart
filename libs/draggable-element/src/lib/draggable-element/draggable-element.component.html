@@ -3,10 +3,10 @@
     (cdkDragStarted)="dragStarted()" (cdkDragEnded)="endDragging($event)"
     [cdkDragFreeDragPosition]="rectangleRef.position" [cdkDragConstrainPosition]="dragConstrainPoint">
     <ng-content></ng-content>
-    <div class="info cover" [ngClass]="{'colliding':isColliding}"></div>
+    <!--  <div class="info cover" [ngClass]="{'colliding':isColliding}"></div>
     <div class="info size"><span>{{rectangleRef.size?.width}}</span>,<span>{{rectangleRef.size?.height}}</span></div>
     <div class="info pos"><span>{{rectangleRef.position.x}}</span>,<span>{{rectangleRef.position.y}}</span></div>
     <div class="info center">
         <span>{{rectangleRef.centerPosition?.x}}</span>,<span>{{rectangleRef.centerPosition?.y}}</span>
-    </div>
+    </div> -->
 </div>

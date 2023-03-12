@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CollisionDetectionService, ICollidable } from '@flow-chart/collision-module';
 import { CollisionResolverService } from "./collisionResolver.service"
 import { CollidableElementsHolderService } from "./draggableElementsHolder.service"
+import { CollisionDetectionService } from './collisionDetection.service';
+import { ICollidable } from './interfaces/ICollidable';
 
 @Injectable()
 export class CollisionCheckerService {

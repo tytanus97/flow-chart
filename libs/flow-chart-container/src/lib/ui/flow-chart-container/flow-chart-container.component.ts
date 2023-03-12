@@ -1,12 +1,12 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core"
+import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core"
 import { PanzoomAdapter } from "../../panzoom-handler/panzoomAdapter.service"
 import { PanzoomFacade } from "../../panzoom-handler/panzoomFacade.service"
 import { PanzoomEventsService } from "../../panzoom-handler/panzoomEvents.service"
 import { PanzoomConfigService } from "../../panzoom-handler/panzoomConfig.service"
 import { CommonModule, NgFor } from "@angular/common"
 import { ElementComponent } from "../element/element.component"
-import { DraggableElementComponent } from "@flow-chart/draggable-element"
-import { CollidableElementsHolderService, CollisionCheckerService, CollisionModule, ICollidable } from "@flow-chart/collision-module"
+import { DraggableElementComponent, DraggableRectangle } from "@flow-chart/draggable-element"
+import { CollidableElementsHolderService, CollisionCheckerService, CollisionModule } from "@flow-chart/collision-module"
 import { Observable } from "rxjs"
 import { OutsideCallStackRunnerService } from "@flow-chart/shared"
 
@@ -18,7 +18,7 @@ import { OutsideCallStackRunnerService } from "@flow-chart/shared"
   providers: [PanzoomAdapter, PanzoomFacade, PanzoomEventsService, PanzoomConfigService],
   imports: [CommonModule, ElementComponent, NgFor, DraggableElementComponent, CollisionModule]
 })
-export class FlowChartContainerComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class FlowChartContainerComponent implements OnInit, AfterViewInit {
   @Input() width?: number
   @Input() height?: number
 
@@ -28,8 +28,8 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit, After
 
   @ViewChild('panzoomWrapper', { static: true }) panzoomWrapper: ElementRef<HTMLDivElement>
   @ViewChildren(DraggableElementComponent)
-  set draggableElements(draggableElements: QueryList<ICollidable>) {
-    this.draggableElementsHolderService.collidableElements = draggableElements.toArray()
+  set draggableElements(draggableElements: QueryList<DraggableRectangle>) {
+    this.collidableElementsHolderService.collidableElements = draggableElements.toArray()
 
     OutsideCallStackRunnerService.execute(() => {
       this.collisionChecker.checkCollisions()
@@ -41,13 +41,10 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit, After
   constructor(private readonly panzoomFacade: PanzoomFacade,
     private readonly panzoomEventsService: PanzoomEventsService,
     private readonly panzoomConfigService: PanzoomConfigService,
-    private readonly draggableElementsHolderService: CollidableElementsHolderService,
+    private readonly collidableElementsHolderService: CollidableElementsHolderService,
     private readonly collisionChecker: CollisionCheckerService,
     private readonly cdRef: ChangeDetectorRef
   ) {
-  }
-  ngAfterViewChecked(): void {
-    console.log('view checked');
   }
 
   ngAfterViewInit(): void {

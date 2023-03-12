@@ -1,6 +1,7 @@
 .flow-chart-wrapper {
     position: relative;
     overflow: hidden;
+    background-color: var(--chart-flow-bg-color);
 }
 .panzoom-wrapper {
     width: 100%;

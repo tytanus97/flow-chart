@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { RectangleService } from './rectangle.service';
 import { Point } from '@angular/cdk/drag-drop';
-import { ICollidable } from '@flow-chart/collision-module';
 import { Size } from '@flow-chart/shared';
+import { ICollidable } from '@flow-chart/collision-module';
 export class DraggableRectangle extends ICollidable {
 
     rectangleRef: RectangleService = inject(RectangleService)
