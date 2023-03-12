@@ -23,6 +23,7 @@ export class DraggableElementComponent extends DraggableRectangle {
   @Input() zoomScale = 1;
   @Output() dragStart = new EventEmitter<void>();
   @Output() dragEnd = new EventEmitter<void>();
+  @Output() sizeChanged = new EventEmitter<void>();
 
   @ViewChild('draggableRect', { static: true }) viewRectangle: ElementRef<HTMLDivElement>
 

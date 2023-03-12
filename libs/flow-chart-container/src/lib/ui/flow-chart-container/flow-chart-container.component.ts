@@ -64,6 +64,12 @@ export class FlowChartContainerComponent implements OnInit, AfterViewInit {
   onDragEnded(draggableElementComponent: DraggableElementComponent) {
     this.panzoomFacade.resumePanzoom()
     this.collisionChecker.checkCollisions(draggableElementComponent)
+    this.cdRef.detectChanges()
+  }
+
+  onDraggableElementSizeChanged(draggableElementComponent: DraggableElementComponent) {
+    this.collisionChecker.checkCollisions(draggableElementComponent)
+    this.cdRef.detectChanges()
   }
 
   onMouseDown() {

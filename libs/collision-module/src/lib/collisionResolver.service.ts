@@ -1,40 +1,59 @@
 import { BLOCK_MARGIN } from './collisionConsts';
 import { Injectable } from "@angular/core";
 import { ICollidable } from "./interfaces/ICollidable";
+import { Vector2d } from '@flow-chart/shared';
 
 @Injectable()
 export class CollisionResolverService {
 
     resolveCollision(rectA: ICollidable, rectB: ICollidable) {
 
-        const { xDiff, yDiff } = this.centerDifference(rectA, rectB)
-        const { xMag, yMag } = this.magnitude(rectA, rectB)
-        const transformVector = this.calculateTransformVector(rectA, xMag, yMag, xDiff, yDiff)
+        const centerDiffVector = this.centerDifference(rectA, rectB)
+        const overlapVector = this.overlapDifference(rectA, rectB, centerDiffVector)
+        const magVector = this.magnitude(rectA, rectB)
+        const directionVector: Vector2d = this.calculateDirectionVector(centerDiffVector)
+        const transformVector = this.calculateTransformVector(rectA, magVector, directionVector, overlapVector)
+
         const newPosition = this.transformPosition(rectB, transformVector)
         rectB.setPosition(newPosition)
     }
 
-    private magnitude(rectA: ICollidable, rectB: ICollidable) {
-        const yMag = 1 - ((((rectA.getSize().height / 2) + rectB.getSize().height / 2) -
+    private calculateDirectionVector(centerDiffVector: Vector2d): Vector2d {
+        return {
+            x: centerDiffVector.x === 0 ? 0 : -Math.sign(centerDiffVector.x),
+            y: centerDiffVector.y === 0 ? 0 : -Math.sign(centerDiffVector.y)
+        }
+    }
+    private magnitude(rectA: ICollidable, rectB: ICollidable): Vector2d {
+        const yMag = Math.min(1, (((rectA.getSize().height / 2) + rectB.getSize().height / 2) -
             Math.abs(rectA.getCenterPosition().y - rectB.getCenterPosition().y)) / rectA.getSize().height)
-        const xMag = 1 - ((((rectA.getSize().width / 2) + rectB.getSize().width / 2) -
+        const xMag = Math.min(1, (((rectA.getSize().width / 2) + rectB.getSize().width / 2) -
             Math.abs(rectA.getCenterPosition().x - rectB.getCenterPosition().x)) / rectA.getSize().width)
-
-        return { xMag, yMag }
+        return { x: xMag, y: yMag }
     }
 
-    private centerDifference(rectA: ICollidable, rectB: ICollidable) {
-        let yDiff = rectA.getCenterPosition().y - rectB.getCenterPosition().y
+    private centerDifference(rectA: ICollidable, rectB: ICollidable): Vector2d {
+        const yDiff = rectA.getCenterPosition().y - rectB.getCenterPosition().y
         const xDiff = rectA.getCenterPosition().x - rectB.getCenterPosition().x
 
-        if (yDiff === 0 && xDiff === 0) {
-            yDiff = -1
-        }
-
-        return { xDiff, yDiff }
+        return { x: xDiff, y: yDiff }
     }
 
-    private transformPosition(rectangle: ICollidable, transformVector: { x: number, y: number }): { x: number, y: number } {
+    private overlapDifference(rectA: ICollidable, rectB: ICollidable, centerDiff: Vector2d
+    ): Vector2d {
+
+        const halfWidthSum = (rectA.getSize().width + rectB.getSize().width) / 2
+        const halfHeightSum = (rectA.getSize().height + rectB.getSize().height) / 2
+
+
+        const xOverlapDiff = halfWidthSum - Math.abs(centerDiff.x)
+        const yOverlapDiff = halfHeightSum - Math.abs(centerDiff.y)
+
+
+        return { x: xOverlapDiff, y: yOverlapDiff }
+    }
+
+    private transformPosition(rectangle: ICollidable, transformVector: Vector2d): Vector2d {
         const { x: rectX, y: rectY } = rectangle.getPosition()
         return {
             x: Math.round(rectX + transformVector.x),
@@ -42,18 +61,19 @@ export class CollisionResolverService {
         }
     }
 
-    private calculateTransformVector(rectA: ICollidable, xMag: number, yMag: number, xDiff: number, yDiff: number): { x: number, y: number } {
-        let xVector = (rectA.getSize().width / 2) * xMag * (xDiff === 0 ? 0 : -Math.sign(xDiff))
-        let yVector = (rectA.getSize().height / 2) * yMag * (yDiff === 0 ? 0 : -Math.sign(yDiff))
+    private calculateTransformVector(rectA: ICollidable, magVector: Vector2d, dirVector: Vector2d, overlapVector: Vector2d): Vector2d {
+        let xVector = overlapVector.x
+        let yVector = overlapVector.y
 
-        if (xMag <= yMag) {
-            yVector = ((rectA.getSize().height + (BLOCK_MARGIN / 2)) - Math.abs(yDiff)) * (yDiff === 0 ? 0 : -Math.sign(yDiff))
+
+        if (magVector.y <= magVector.x) {
+            xVector = 0
         }
 
-        if (yMag <= xMag) {
-            xVector = ((rectA.getSize().width + (BLOCK_MARGIN / 2)) - Math.abs(xDiff)) * (xDiff === 0 ? 0 : -Math.sign(xDiff))
+        if (magVector.x <= magVector.y) {
+            yVector = 0
         }
 
-        return { x: xVector, y: yVector }
+        return { x: (xVector + BLOCK_MARGIN / 2) * dirVector.x, y: (yVector + BLOCK_MARGIN / 2) * dirVector.y }
     }
 }

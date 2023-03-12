@@ -3,6 +3,7 @@
 
     <div #panzoomWrapper class="panzoom-wrapper">
         <flow-chart-draggable-element #flowChartDraggableElement
+            (sizeChanged)="onDraggableElementSizeChanged(flowChartDraggableElement)"
             *ngFor="let flowChartElement of flowChartElements; trackBy: trackByFn" [id]="flowChartElement.id"
             (dragStart)="onDragStarted()" (dragEnd)="onDragEnded(flowChartDraggableElement)" (mousedown)="onMouseDown()"
             (mouseup)="onMouseUp()" [zoomScale]="panzoomScale$ | async">
