@@ -19,10 +19,16 @@ export class CollisionResolverService {
     }
 
     private calculateDirectionVector(centerDiffVector: Vector2d): Vector2d {
-        return {
+        const directionVector = {
             x: centerDiffVector.x === 0 ? 0 : -Math.sign(centerDiffVector.x),
             y: centerDiffVector.y === 0 ? 0 : -Math.sign(centerDiffVector.y)
         }
+
+        if (directionVector.x === 0 && directionVector.y === 0) {
+            directionVector.y = 1;
+        }
+
+        return directionVector
     }
     private magnitude(rectA: ICollidable, rectB: ICollidable): Vector2d {
         const yMag = Math.min(1, (((rectA.getSize().height / 2) + rectB.getSize().height / 2) -
