@@ -25,8 +25,7 @@ export class CollisionResolverService {
         }
 
         if (directionVector.x === 0 && directionVector.y === 0) {
-            directionVector.y = directionVector.x = 1;
-
+            directionVector.y = 1
         }
 
         return directionVector
@@ -69,18 +68,8 @@ export class CollisionResolverService {
     }
 
     private calculateTransformVector(rectA: ICollidable, magVector: Vector2d, dirVector: Vector2d, overlapVector: Vector2d): Vector2d {
-        let xVector = overlapVector.x
-        let yVector = overlapVector.y
-
-
-        if (magVector.y <= magVector.x) {
-            xVector = 0
-        }
-
-        if (magVector.x <= magVector.y) {
-            yVector = 0
-        }
-
+        const xVector = magVector.y < magVector.x ? 0 : overlapVector.x
+        const yVector = magVector.x < magVector.y ? 0 : overlapVector.y
         return { x: (xVector + BLOCK_MARGIN / 2) * dirVector.x, y: (yVector + BLOCK_MARGIN / 2) * dirVector.y }
     }
 }

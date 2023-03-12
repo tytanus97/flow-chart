@@ -13,6 +13,6 @@ export class CustomElementComponent {
 
   addMoreText(event: Event) {
     event.preventDefault()
-    this.text = this.text.concat(' some more text')
+    this.text = this.text.concat(' some more textsome more textsome more text')
   }
 }
