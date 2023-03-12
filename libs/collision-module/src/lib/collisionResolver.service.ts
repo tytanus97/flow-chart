@@ -25,7 +25,8 @@ export class CollisionResolverService {
         }
 
         if (directionVector.x === 0 && directionVector.y === 0) {
-            directionVector.y = 1;
+            directionVector.y = directionVector.x = 1;
+
         }
 
         return directionVector
